@@ -22,4 +22,30 @@ async function init() {
       ],
     },
   ]);
+  switch (mainMenu.choices) {
+    case "View All Departments":
+      viewAllDepartments();
+      break;
+    case "View All Roles":
+      viewAllRoles();
+      break;
+    case "View All Employees":
+      viewAllEmployees();
+      break;
+    case "Add a Department":
+      addDepartment();
+      break;
+    case "Add a Role":
+      addRole();
+      break;
+    case "Add an Employee":
+      addEmployee();
+      break;
+    case "Update an Employee Role":
+      updateEmployeeRole();
+      break;
+    case "Quit":
+      quit();
+      break;
+  }
 }
