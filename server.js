@@ -96,7 +96,6 @@ function viewAllEmployees() {
     });
   }
 
-
 function addDepartment() {
     inquirer.prompt([
       {
@@ -112,6 +111,41 @@ function addDepartment() {
       db.query(query, [answer.departmentName], (err, results) => {
         if (err) throw err;
         viewAllDepartments();
+      });
+    });
+  }
+
+  // Add a role
+function addRole() {
+    db.query("SELECT * FROM department;", (err, results) => {
+      if (err) throw err;
+      inquirer.prompt([
+        {
+          type: "input",
+          name: "roleName",
+          message: "Enter a role to be added:",
+        },
+        {
+          type: "input",
+          name: "roleSalary",
+          message: "Enter the salary for the role:",
+        },
+        {
+          type: "list",
+          name: "departmentName",
+          message: "Select department for this role:",
+          choices: results.map(department => department.department_name),
+        },
+      ])
+      .then((answer) => {
+        const department = results.find(dept => dept.department_name === answer.departmentName);
+        const query = `
+          INSERT INTO role (title, salary, department_id)
+          VALUES (?, ?, ?);`;
+        db.query(query, [answer.roleName, answer.roleSalary, department.department_id], (err, results) => {
+          if (err) throw err;
+          viewAllRoles();
+        });
       });
     });
   }
