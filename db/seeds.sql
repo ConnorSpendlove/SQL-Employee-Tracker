@@ -1,7 +1,7 @@
 USE employee_db;
 
 -- Insert data into department table
-INSERT INTO department (department_name)
+INSERT INTO department (name)
 VALUES ("Engineering"),
        ("Finance"),
        ("Legal"),
