@@ -1,24 +1,29 @@
+USE employee_db;
+
+-- Insert data into department table
 INSERT INTO department (department_name)
-VALUES ("Research and Development"),
-       ("Human Resources"),
-       ("Marketing"),
-       ("Customer Support");
+VALUES ("Engineering"),
+       ("Finance"),
+       ("Legal"),
+       ("Sales");
 
+-- Insert data into role table
 INSERT INTO role (title, salary, department_id)
-VALUES ("Customer Support Representative", 50000, 4),
-       ("Customer Support Manager", 75000, 4),
-       ("R&D Director", 150000, 1),
-       ("Research Scientist", 90000, 1),
-       ("Marketing Director", 120000, 3),
-       ("Marketing Specialist", 70000, 3),
-       ("HR Coordinator", 60000, 2),
-       ("HR Manager", 85000, 2);
+VALUES ("Sales Person", 100000, 4),
+       ("Sales Lead", 150000, 4),
+       ("Lead Engineer", 150000, 1),
+       ("Software Engineer", 100000, 1),
+       ("Legal Team Lead", 300000, 3),
+       ("Lawyer", 200000, 3),
+       ("Accountant", 100000, 2),
+       ("Account Manager", 200000, 2);
 
+-- Insert data into employee table
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES  ("Alice", "Johnson", 5, NULL),
-        ("Bob", "Williams", 6, 1),
-        ("Charlotte", "Miller", 6, 1),
-        ("David", "Garcia", 8, 2),
-        ("Emma", "Martinez", 7, 2),
-        ("Frank", "Lee", 1, 3),
-        ("Grace", "Davis", 2, 3);
+VALUES ("John", "Smith", 5, NULL),
+       ("Mary", "Smith", 6, 1),
+       ("Sophia", "Brown", 6, 1),
+       ("Oliver", "Mo", 8, 2),
+       ("Kevin", "Chan", 7, 2),
+       ("Mary", "Soares", 1, 3),
+       ("Mike", "Rodriguez", 2, 3);
