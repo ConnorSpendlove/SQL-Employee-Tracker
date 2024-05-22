@@ -196,7 +196,6 @@ function addRole() {
     });
   }
 
- 
 function updateEmployeeRole() {
     db.query(`
       SELECT employee_id, CONCAT(first_name, ' ', last_name) as EmployeeName, role.title
@@ -233,3 +232,11 @@ function updateEmployeeRole() {
       });
     });
   }
+
+  function quit() {
+    db.end();
+    console.info("Bye");
+  }
+  
+
+  init();
