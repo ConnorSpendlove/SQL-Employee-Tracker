@@ -77,7 +77,6 @@ function viewAllDepartments() {
     });
   }
 
-  // View all employees
 function viewAllEmployees() {
     const query = `
     SELECT employee.employee_id as "Employee ID",
@@ -94,5 +93,25 @@ function viewAllEmployees() {
       if (err) throw err;
       console.table(results);
       init();
+    });
+  }
+
+
+function addDepartment() {
+    inquirer.prompt([
+      {
+        type: "input",
+        name: "departmentName",
+        message: "Enter a department name:",
+      },
+    ])
+    .then((answer) => {
+      const query = `
+        INSERT INTO department (department_name)
+        VALUES (?);`;
+      db.query(query, [answer.departmentName], (err, results) => {
+        if (err) throw err;
+        viewAllDepartments();
+      });
     });
   }
