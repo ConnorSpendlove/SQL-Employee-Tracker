@@ -9,6 +9,14 @@ CREATE TABLE department (
 );
 
 CREATE TABLE employee (
+    employee_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    firt_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30) NOT NULL,
+    role_id INT,
+    manager_id INT,
+    FOREIGN KEY (role_id)
+    REFERENCES role(role_id)
+    ON DELETE SET NULL
 );
 
 CREATE TABLE role (
