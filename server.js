@@ -49,3 +49,15 @@ async function init() {
       break;
   }
 }
+
+function viewAllDepartments() {
+    const query = `
+      SELECT department_id as "Department ID",
+             department_name as "Department Name"
+      FROM department;`;
+    db.query(query, (err, results) => {
+      if (err) throw err;
+      console.table(results);
+      init();
+    });
+  }
