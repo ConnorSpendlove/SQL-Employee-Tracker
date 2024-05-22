@@ -149,3 +149,49 @@ function addRole() {
       });
     });
   }
+
+  function addEmployee() {
+    db.query("SELECT role_id, title FROM role;", (err, roleResults) => {
+      if (err) throw err;
+      const roles = roleResults.map(role => ({ name: role.title, value: role.role_id }));
+  
+      db.query("SELECT employee_id, CONCAT(first_name, ' ', last_name) as EmployeeName FROM employee;", (err, employeeResults) => {
+        if (err) throw err;
+        const managers = employeeResults.map(manager => ({ name: manager.EmployeeName, value: manager.employee_id }));
+  
+        inquirer.prompt([
+          {
+            type: "input",
+            name: "firstName",
+            message: "Enter employee first name to be added:",
+          },
+          {
+            type: "input",
+            name: "lastName",
+            message: "Enter employee last name to be added:",
+          },
+          {
+            type: "list",
+            name: "roleId",
+            message: "Choose a role:",
+            choices: roles,
+          },
+          {
+            type: "list",
+            name: "managerId",
+            message: "Choose a manager:",
+            choices: managers,
+          },
+        ])
+        .then((answer) => {
+          const query = `
+            INSERT INTO employee (first_name, last_name, role_id, manager_id)
+            VALUES (?, ?, ?, ?);`;
+          db.query(query, [answer.firstName, answer.lastName, answer.roleId, answer.managerId], (err, results) => {
+            if (err) throw err;
+            viewAllEmployees();
+          });
+        });
+      });
+    });
+  }
