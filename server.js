@@ -1,16 +1,25 @@
-const express = require('express');
-const path = require('path');
-const mysql = require('mysql2');
+// Imports
+const mysql = require("mysql2");
+const inquirer = require("inquirer");
+const db = require("./db/connection.js");
 
-const PORT = process.env.PORT || 3001;
-const app = express();
-
-// Middleware for parsing application/json and urlencoded data
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-// Middleware for front-end
-app.use(express.static('public'));
-
-app.listen(PORT, () =>
-    console.log(`Server running on http://localhost:${PORT}`)
-  );
+// Function that starts the application
+async function init() {
+  const mainMenu = await inquirer.prompt([
+    {
+      type: "list",
+      name: "choices",
+      message: "Select an option",
+      choices: [
+        { value: "View All Departments" },
+        { value: "View All Roles" },
+        { value: "View All Employees" },
+        { value: "Add a Department" },
+        { value: "Add a Role" },
+        { value: "Add an Employee" },
+        { value: "Update an Employee Role" },
+        { value: "Quit" },
+      ],
+    },
+  ]);
+}
