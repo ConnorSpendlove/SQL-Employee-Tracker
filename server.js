@@ -76,3 +76,23 @@ function viewAllDepartments() {
       init();
     });
   }
+
+  // View all employees
+function viewAllEmployees() {
+    const query = `
+    SELECT employee.employee_id as "Employee ID",
+    CONCAT(employee.first_name, " ", employee.last_name) as "Employee Name",
+    CONCAT(IFNULL(manager.first_name, "NO MANAGER ASSIGNED"), " ", IFNULL(manager.last_name, "")) as "Manager",
+    role.title as "Role",
+    department.department_name as "Department",
+    role.salary as "Salary"
+    FROM employee
+    LEFT JOIN role ON employee.role_id = role.role_id
+    LEFT JOIN department ON role.department_id = department.department_id
+    LEFT JOIN employee manager ON employee.manager_id = manager.employee_id;`;
+    db.query(query, (err, results) => {
+      if (err) throw err;
+      console.table(results);
+      init();
+    });
+  }
