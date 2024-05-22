@@ -195,3 +195,41 @@ function addRole() {
       });
     });
   }
+
+ 
+function updateEmployeeRole() {
+    db.query(`
+      SELECT employee_id, CONCAT(first_name, ' ', last_name) as EmployeeName, role.title
+      FROM employee
+      LEFT JOIN role ON employee.role_id = role.role_id;`, (err, employeeResults) => {
+      if (err) throw err;
+      db.query("SELECT role_id, title FROM role;", (err, roleResults) => {
+        if (err) throw err;
+        inquirer.prompt([
+          {
+            type: "list",
+            name: "employeeName",
+            message: "Select an employee to update:",
+            choices: employeeResults.map(employee => employee.EmployeeName),
+          },
+          {
+            type: "list",
+            name: "roleTitle",
+            message: "Select the new role you want to assign to the employee:",
+            choices: roleResults.map(role => role.title),
+          },
+        ])
+        .then((answer) => {
+          const employee = employeeResults.find(emp => emp.EmployeeName === answer.employeeName);
+          const role = roleResults.find(role => role.title === answer.roleTitle);
+          const query = `
+            UPDATE employee SET role_id = ?
+            WHERE employee_id = ?;`;
+          db.query(query, [role.role_id, employee.employee_id], (err, results) => {
+            if (err) throw err;
+            viewAllEmployees();
+          });
+        });
+      });
+    });
+  }
