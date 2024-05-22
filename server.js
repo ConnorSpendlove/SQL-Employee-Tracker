@@ -52,9 +52,24 @@ async function init() {
 
 function viewAllDepartments() {
     const query = `
-      SELECT department_id as "Department ID",
-             department_name as "Department Name"
-      FROM department;`;
+    SELECT department_id as "Department ID",
+    department_name as "Department Name"
+    FROM department;`;
+    db.query(query, (err, results) => {
+      if (err) throw err;
+      console.table(results);
+      init();
+    });
+  }
+
+  function viewAllRoles() {
+    const query = `
+    SELECT role_id as "Role ID",
+    title as "Role Title",
+    salary as "Role Salary",
+    department_name as "Department Name"
+    FROM role
+    LEFT JOIN department ON role.department_id = department.department_id;`;
     db.query(query, (err, results) => {
       if (err) throw err;
       console.table(results);
