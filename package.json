@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "expresss": "^0.0.0",
     "inquirer": "^9.2.22",
     "mysql2": "^3.9.7"
   }
